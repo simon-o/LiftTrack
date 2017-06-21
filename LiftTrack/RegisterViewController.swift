@@ -33,12 +33,23 @@ class RegisterViewController: UIViewController {
         let padding2 = UIView(frame: CGRect(x: 0, y: 0, width: 20.0, height: pseudo.frame.size.height))
         pseudo.leftView = padding2
         pseudo.leftViewMode = UITextFieldViewMode.always
-        
+        pseudo.layer.cornerRadius = 21.0
+        pseudo.layer.borderWidth = 0.0
+        email.layer.cornerRadius = 21.0
+        email.layer.borderWidth = 0.0
+        password.layer.cornerRadius = 21.0
+        password.layer.borderWidth = 0.0
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
     }
     
     @IBAction func creationTapped(_ sender: Any) {
