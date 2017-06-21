@@ -1,0 +1,6 @@
+framework module Pods_LiftTrackUITests {
+  umbrella header "Pods-LiftTrackUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
