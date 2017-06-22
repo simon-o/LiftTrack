@@ -33,11 +33,13 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.9)
+  - JTAppleCalendar (7.0.2)
 
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - JTAppleCalendar (~> 7.0)
 
 SPEC CHECKSUMS:
   Firebase: 4b66b5b59c43edac745b87f0c87e42cdd0279c13
@@ -48,7 +50,8 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
+  JTAppleCalendar: c14685634064ef67a68209548ff3443208af48a3
 
-PODFILE CHECKSUM: fa981d31ca9bd5aee543fa3bb0a84995f67629e4
+PODFILE CHECKSUM: 9a0204e972f5d0ba90c0f5b1b56c7427c56506d0
 
 COCOAPODS: 1.2.1

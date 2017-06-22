@@ -30,6 +30,10 @@ class ViewController: UIViewController {
         email.layer.borderWidth = 0.0
         password.layer.cornerRadius = 21.0
         password.layer.borderWidth = 0.0
+        
+        //Debug
+        email.text = "lol@lol.com"
+        password.text = "lollol"
     }
 
     override func didReceiveMemoryWarning() {
