@@ -21,6 +21,8 @@
 		D6278C941EF908D000D07C73 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6278C931EF908D000D07C73 /* GoogleService-Info.plist */; };
 		D6278CA31EF9246300D07C73 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6278CA21EF9246300D07C73 /* RegisterViewController.swift */; };
 		D6278CA51EF9247200D07C73 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6278CA41EF9247200D07C73 /* HomeViewController.swift */; };
+		D68E277E1EFE781400091D18 /* PickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68E277D1EFE781400091D18 /* PickerDialog.swift */; };
+		D68E27801EFE799700091D18 /* FormsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68E277F1EFE799700091D18 /* FormsViewController.swift */; };
 		D6A657C61EFA736C00B5A21B /* ABChanel-PB-Regular-L.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6A657BF1EFA70A800B5A21B /* ABChanel-PB-Regular-L.otf */; };
 		D6A657C71EFA736C00B5A21B /* ABChanel-PB-Regular-M.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6A657C01EFA70A800B5A21B /* ABChanel-PB-Regular-M.otf */; };
 		D6A657C81EFA736C00B5A21B /* ABChanel-PB-Regular-S.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6A657C11EFA70A800B5A21B /* ABChanel-PB-Regular-S.otf */; };
@@ -74,6 +76,8 @@
 		D6278C931EF908D000D07C73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D6278CA21EF9246300D07C73 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D6278CA41EF9247200D07C73 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D68E277D1EFE781400091D18 /* PickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerDialog.swift; sourceTree = "<group>"; };
+		D68E277F1EFE799700091D18 /* FormsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormsViewController.swift; sourceTree = "<group>"; };
 		D6A657BF1EFA70A800B5A21B /* ABChanel-PB-Regular-L.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ABChanel-PB-Regular-L.otf"; sourceTree = "<group>"; };
 		D6A657C01EFA70A800B5A21B /* ABChanel-PB-Regular-M.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ABChanel-PB-Regular-M.otf"; sourceTree = "<group>"; };
 		D6A657C11EFA70A800B5A21B /* ABChanel-PB-Regular-S.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ABChanel-PB-Regular-S.otf"; sourceTree = "<group>"; };
@@ -161,13 +165,15 @@
 			children = (
 				D6278C621EF907B200D07C73 /* AppDelegate.swift */,
 				D6278CA21EF9246300D07C73 /* RegisterViewController.swift */,
+				D68E277D1EFE781400091D18 /* PickerDialog.swift */,
 				D6278CA41EF9247200D07C73 /* HomeViewController.swift */,
 				D6278C641EF907B200D07C73 /* ViewController.swift */,
+				D62211D21EFBA012005B590B /* CalendarCollectionViewCell.swift */,
 				D6278C661EF907B200D07C73 /* Main.storyboard */,
 				D6278C6C1EF907B200D07C73 /* Assets.xcassets */,
 				D6278C6E1EF907B200D07C73 /* LaunchScreen.storyboard */,
 				D6A657C51EFA70B800B5A21B /* Ressources */,
-				D62211D21EFBA012005B590B /* CalendarCollectionViewCell.swift */,
+				D68E277F1EFE799700091D18 /* FormsViewController.swift */,
 			);
 			path = LiftTrack;
 			sourceTree = "<group>";
@@ -499,6 +505,8 @@
 			files = (
 				D62211D31EFBA012005B590B /* CalendarCollectionViewCell.swift in Sources */,
 				D6278CA51EF9247200D07C73 /* HomeViewController.swift in Sources */,
+				D68E27801EFE799700091D18 /* FormsViewController.swift in Sources */,
+				D68E277E1EFE781400091D18 /* PickerDialog.swift in Sources */,
 				D6278C6B1EF907B200D07C73 /* LiftTrack.xcdatamodeld in Sources */,
 				D6278C651EF907B200D07C73 /* ViewController.swift in Sources */,
 				D6278C631EF907B200D07C73 /* AppDelegate.swift in Sources */,

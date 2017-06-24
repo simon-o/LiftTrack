@@ -11,5 +11,8 @@ import JTAppleCalendar
 
 class CalendarCollectionViewCell: JTAppleCell {
     @IBOutlet weak var dataLabel: UILabel!
-    
+    @IBOutlet weak var hasExercice: UIView!
+    @IBOutlet weak var selectedView: UIView!
+    @IBOutlet weak var isToday: UIView!
+
 } 
