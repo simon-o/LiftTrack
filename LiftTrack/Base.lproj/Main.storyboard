@@ -237,8 +237,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mx5-sx-Mee">
-                                <rect key="frame" x="355" y="28" width="32" height="30"/>
-                                <state key="normal" title="ADD">
+                                <rect key="frame" x="357" y="28" width="30" height="35"/>
+                                <fontDescription key="fontDescription" name="ABChanelPBSemiBoldS" family="ABChanel PB SemiBold S" pointSize="17"/>
+                                <state key="normal" title="+">
                                     <color key="titleColor" red="0.3366454244" green="0.75165790320000003" blue="0.87749654050000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -246,7 +247,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4rj-Ul-vAt">
-                                <rect key="frame" x="0.0" y="70" width="414" height="16"/>
+                                <rect key="frame" x="0.0" y="75" width="414" height="16"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SgR-Wf-koa">
                                         <rect key="frame" x="0.0" y="0.0" width="59" height="16"/>
@@ -293,7 +294,7 @@
                                 </subviews>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LZ4-8z-Y0x" customClass="JTAppleCalendarView" customModule="JTAppleCalendar">
-                                <rect key="frame" x="0.0" y="86" width="414" height="321"/>
+                                <rect key="frame" x="0.0" y="91" width="414" height="316"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" id="2jA-pS-R1g">
                                     <size key="itemSize" width="50" height="50"/>
@@ -393,7 +394,7 @@
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BrL-aV-7Dx">
-                                <rect key="frame" x="20" y="39" width="63" height="19"/>
+                                <rect key="frame" x="20" y="44" width="63" height="19"/>
                                 <fontDescription key="fontDescription" name="ABChanelPBRegularL" family="ABChanel PB Regular L" pointSize="14"/>
                                 <color key="textColor" red="0.92538958790000003" green="0.92554813619999998" blue="0.92537957429999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -434,10 +435,10 @@
             </objects>
             <point key="canvasLocation" x="1572.4637681159422" y="35.869565217391305"/>
         </scene>
-        <!--View Controller-->
+        <!--Forms View Controller-->
         <scene sceneID="TbH-fM-7Lx">
             <objects>
-                <viewController id="3i8-PA-z7D" sceneMemberID="viewController">
+                <viewController id="3i8-PA-z7D" customClass="FormsViewController" customModule="LiftTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Fn7-fM-B5f"/>
                         <viewControllerLayoutGuide type="bottom" id="EZA-Sh-u6J"/>
@@ -447,37 +448,107 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gW-4T-o9F">
-                                <rect key="frame" x="20" y="20" width="59" height="35"/>
+                                <rect key="frame" x="20" y="20" width="89" height="35"/>
                                 <fontDescription key="fontDescription" name="ABChanelPBSemiBoldS" family="ABChanel PB SemiBold S" pointSize="17"/>
-                                <state key="normal" title="Back">
+                                <state key="normal" title="retour">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="backTapped:" destination="3i8-PA-z7D" eventType="touchUpInside" id="Jey-sM-v6G"/>
+                                </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Nom de l'exercise" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kVW-b6-LF8">
-                                <rect key="frame" x="70" y="156" width="274" height="35"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nom de l'exercise" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kVW-b6-LF8">
+                                <rect key="frame" x="50" y="105" width="284" height="35"/>
                                 <color key="backgroundColor" red="0.082064785060000006" green="0.089920617640000006" blue="0.10654168579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="jhc-cg-GDv"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="ABChanelPBRegularL" family="ABChanel PB Regular L" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQd-Ui-ptR">
-                                <rect key="frame" x="154" y="649" width="106" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Nombre de repetition" placeholder="Nom de l'exercise" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q13-ZC-AU2">
+                                <rect key="frame" x="50" y="172" width="314" height="35"/>
+                                <color key="backgroundColor" red="0.082064785060000006" green="0.089920617640000006" blue="0.10654168579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="6wD-eg-KA0"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="ABChanelPBRegularL" family="ABChanel PB Regular L" pointSize="12"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nombre de serie" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1QB-Xo-ZgP">
+                                <rect key="frame" x="50" y="239" width="314" height="35"/>
+                                <color key="backgroundColor" red="0.082064785060000006" green="0.089920617640000006" blue="0.10654168579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="B6y-YF-7NR"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="ABChanelPBRegularL" family="ABChanel PB Regular L" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQd-Ui-ptR">
+                                <rect key="frame" x="158" y="644" width="99" height="35"/>
                                 <fontDescription key="fontDescription" name="ABChanelPBRegularS" family="ABChanel PB Regular S" pointSize="17"/>
                                 <state key="normal" title="Ajouter">
                                     <color key="titleColor" red="0.3366454244" green="0.75165790320000003" blue="0.87749654050000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="addTapped:" destination="3i8-PA-z7D" eventType="touchUpInside" id="AgC-s2-CI6"/>
+                                </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YS7-Dd-rD3">
+                                <rect key="frame" x="342" y="107" width="30" height="30"/>
+                                <state key="normal" title="+"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                        <color key="value" red="0.1989056766" green="0.23070472480000001" blue="0.27231127020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Poids" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m5Q-t9-glE">
+                                <rect key="frame" x="50" y="306" width="314" height="35"/>
+                                <color key="backgroundColor" red="0.082064785060000006" green="0.089920617640000006" blue="0.10654168579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="oQd-QC-z39"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="ABChanelPBRegularL" family="ABChanel PB Regular L" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.05489068478345871" green="0.054908446967601776" blue="0.054889537394046783" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9gW-4T-o9F" firstAttribute="top" secondItem="Fn7-fM-B5f" secondAttribute="bottom" id="3aS-60-VH1"/>
                             <constraint firstItem="9gW-4T-o9F" firstAttribute="leading" secondItem="uB4-Ab-9mz" secondAttribute="leadingMargin" id="4Af-3o-HRm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1QB-Xo-ZgP" secondAttribute="trailing" constant="30" id="4Vb-rM-Usq"/>
+                            <constraint firstItem="EZA-Sh-u6J" firstAttribute="top" secondItem="vQd-Ui-ptR" secondAttribute="bottom" constant="8" id="GJZ-Mi-Knf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Q13-ZC-AU2" secondAttribute="trailing" constant="30" id="GM9-zJ-Nly"/>
+                            <constraint firstItem="vQd-Ui-ptR" firstAttribute="centerX" secondItem="uB4-Ab-9mz" secondAttribute="centerX" id="HIT-Rc-JAX"/>
+                            <constraint firstItem="Q13-ZC-AU2" firstAttribute="top" secondItem="kVW-b6-LF8" secondAttribute="bottom" constant="32" id="Hcj-BY-L25"/>
+                            <constraint firstItem="m5Q-t9-glE" firstAttribute="top" secondItem="1QB-Xo-ZgP" secondAttribute="bottom" constant="32" id="MqX-SA-oPP"/>
+                            <constraint firstItem="m5Q-t9-glE" firstAttribute="leading" secondItem="uB4-Ab-9mz" secondAttribute="leadingMargin" constant="30" id="NPK-tH-9D3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="m5Q-t9-glE" secondAttribute="trailing" constant="30" id="O9E-ol-Mfn"/>
+                            <constraint firstItem="kVW-b6-LF8" firstAttribute="top" secondItem="9gW-4T-o9F" secondAttribute="bottom" constant="50" id="P41-3c-dAH"/>
+                            <constraint firstItem="YS7-Dd-rD3" firstAttribute="leading" secondItem="kVW-b6-LF8" secondAttribute="trailing" constant="8" id="Zsj-Iy-lpH"/>
+                            <constraint firstItem="1QB-Xo-ZgP" firstAttribute="leading" secondItem="uB4-Ab-9mz" secondAttribute="leadingMargin" constant="30" id="ewb-g4-CQb"/>
+                            <constraint firstItem="kVW-b6-LF8" firstAttribute="leading" secondItem="uB4-Ab-9mz" secondAttribute="leadingMargin" constant="30" id="oxZ-m2-uLE"/>
+                            <constraint firstItem="1QB-Xo-ZgP" firstAttribute="top" secondItem="Q13-ZC-AU2" secondAttribute="bottom" constant="32" id="rgX-ML-GDQ"/>
+                            <constraint firstItem="YS7-Dd-rD3" firstAttribute="centerY" secondItem="kVW-b6-LF8" secondAttribute="centerY" id="sH7-yM-8Gk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kVW-b6-LF8" secondAttribute="trailing" constant="60" id="xhw-r2-wxI"/>
+                            <constraint firstItem="Q13-ZC-AU2" firstAttribute="leading" secondItem="uB4-Ab-9mz" secondAttribute="leadingMargin" constant="30" id="xog-Ak-Btd"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="9gW-4T-o9F" id="2fZ-vw-nFF"/>
+                        <outlet property="exoKG" destination="m5Q-t9-glE" id="R4f-bx-cUF"/>
+                        <outlet property="exoName" destination="kVW-b6-LF8" id="68r-Ib-Beb"/>
+                        <outlet property="exoRep" destination="Q13-ZC-AU2" id="zJI-Hc-oPW"/>
+                        <outlet property="exoSerie" destination="1QB-Xo-ZgP" id="dwq-E4-GWK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YrS-1A-Vgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

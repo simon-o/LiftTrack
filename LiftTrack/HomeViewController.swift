@@ -22,12 +22,17 @@ class HomeViewController: UIViewController {
         calendarView.visibleDates { (visibleDates) in
             self.displayMonthYear(visibleDates: visibleDates)
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let today = Date()
+        calendarView?.scrollToDate(today)
     }
     
     func displayMonthYear(visibleDates: DateSegmentInfo){

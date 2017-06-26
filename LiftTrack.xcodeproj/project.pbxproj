@@ -169,11 +169,11 @@
 				D6278CA41EF9247200D07C73 /* HomeViewController.swift */,
 				D6278C641EF907B200D07C73 /* ViewController.swift */,
 				D62211D21EFBA012005B590B /* CalendarCollectionViewCell.swift */,
+				D68E277F1EFE799700091D18 /* FormsViewController.swift */,
 				D6278C661EF907B200D07C73 /* Main.storyboard */,
 				D6278C6C1EF907B200D07C73 /* Assets.xcassets */,
 				D6278C6E1EF907B200D07C73 /* LaunchScreen.storyboard */,
 				D6A657C51EFA70B800B5A21B /* Ressources */,
-				D68E277F1EFE799700091D18 /* FormsViewController.swift */,
 			);
 			path = LiftTrack;
 			sourceTree = "<group>";
