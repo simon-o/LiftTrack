@@ -112,7 +112,7 @@ class PickerDialog: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         UIApplication.shared.windows.first!.addSubview(self)
         UIApplication.shared.windows.first!.endEditing(true)
 
-        NotificationCenter.default.addObserver(self, selector: Selector(("deviceOrientationDidChange:")), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: Selector(("deviceOrientationDidChange:")), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
 
         /* Anim */
         UIView.animate(
