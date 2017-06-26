@@ -8,6 +8,7 @@
 
 import UIKit
 import JTAppleCalendar
+import Firebase
 
 class HomeViewController: UIViewController {
     @IBOutlet weak var year: UILabel!
@@ -15,6 +16,9 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     
     let formatter = DateFormatter()
+    var selectedDate = Date()
+    var allDate = [String]()
+    var ref = FIRDatabase.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +37,25 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         let today = Date()
         calendarView?.scrollToDate(today)
+        parseDate()
+    }
+    
+    func parseDate(){
+        ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exos").observeSingleEvent(of: .value, with: { (snap) in
+            if !snap.exists() { return }
+            
+            var keys = [String]()
+            let tmp = snap.value as! [String:Any]
+            for child in tmp{
+                keys.append(child.key)
+            }
+            
+            for index in 0...keys.count - 1{
+                if let row = tmp[keys[index]] as? [String:String]{
+                    self.allDate.append(row["date"]!)
+                }
+            }
+        })
     }
     
     func displayMonthYear(visibleDates: DateSegmentInfo){
@@ -43,6 +66,14 @@ class HomeViewController: UIViewController {
         
         self.formatter.dateFormat = "MMMM"
         self.month.text = self.formatter.string(from: date)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "add"{
+            if let dest = segue.destination as? FormsViewController{
+                dest.date = selectedDate
+            }
+        }
     }
 }
 
@@ -103,6 +134,7 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let validCell = cell as? CalendarCollectionViewCell else {return}
         validCell.selectedView.isHidden = false
+        selectedDate = date
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {

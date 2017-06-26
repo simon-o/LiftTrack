@@ -82,6 +82,7 @@ class ViewController: UIViewController {
                     }))
                     self.present(alert, animated: true, completion: nil)
                 }else{
+                    UserDefaults.standard.set(user?.uid, forKey: "userUID")
                     if let homeVC = (self.storyboard?.instantiateViewController(withIdentifier: "MainTabBar")) as? UITabBarController
                     {
                         self.present(homeVC, animated: true, completion: {

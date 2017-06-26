@@ -24,6 +24,10 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
     var limiteSerie = 20
     var limiteRep = 40
     
+    var date:Date!
+    
+    var exos = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -86,7 +90,7 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
         switch textField.tag {
         case 0:
             picker.show(title: "Choisissez l'exercice", options: [["value":"l"],["value":"p"],["value":"g"]]) { (response) in
-                print(response)
+                self.exoName.text = response
             }
         case 1:
             var i = 0
@@ -96,7 +100,7 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
                 i += 1
             }
             picker.show(title: "Choisissez le nombre de repetition", options: tmp) { (response) in
-                print(response)
+                self.exoRep.text = response
             }
         case 2:
             var i = 0
@@ -107,7 +111,7 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
                 i += 1
             }
             picker.show(title: "Choisissez le nombre de serie", options: tmp) { (response) in
-                print(response)
+                self.exoSerie.text = response
             }
         case 3:
             var i = 0.0
@@ -118,11 +122,28 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
                 i += 0.5
             }
             picker.show(title: "Choisissez le poid utilisé", options: tmp) { (response) in
-                print(response)
+                self.exoKG.text = response
             }
         default: break
         }
         
+    }
+    
+    @IBAction func addExoTapped(_ sender: Any) {
+        let alert = UIAlertController(title: "Ajouter un nouvel exercice", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.cancel, handler: nil))
+            alert.addTextField(configurationHandler: { (configurationTextField) in
+            })
+        
+        alert.addAction(UIAlertAction(title: "Ajouter", style: UIAlertActionStyle.default, handler:{ (UIAlertAction)in
+            if let textField = alert.textFields?.first?.text {
+                self.exos.append(textField)
+                self.exoName.text = textField
+            }
+        }))
+        self.present(alert, animated: true, completion: {
+        })
     }
     
     @IBAction func backTapped(_ sender: Any) {
@@ -130,6 +151,22 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        
+        if (exoName.text == "" || exoRep.text == "" || exoSerie.text == "" || exoKG.text == ""){
+            let alert = UIAlertController(title: "Erreur", message: "Vous devez remplir tous les champs", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        if let user = UserDefaults.standard.object(forKey: "userUID") as? String{
+            if exoName.text != ""{
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy MM dd"
+                let tmpDate = formatter.string(from: date)
+                ref.child("users").child(user).child("exos").childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoKG.text!, "date":tmpDate])
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }
