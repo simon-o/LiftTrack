@@ -817,7 +817,7 @@ extension JTAppleCalendarView {
         // Why reload invisible paths? because they have already been prefetched
         if !invisiblePathsToRelad.isEmpty {
             calendarViewLayout.shouldClearCacheOnInvalidate = false
-            reloadItems(at: invisiblePathsToRelad)
+//            reloadItems(at: invisiblePathsToRelad)
         }
         
         // Reload the visible paths

@@ -9,11 +9,13 @@
 import UIKit
 import JTAppleCalendar
 import Firebase
+import Charts
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
+    @IBOutlet weak var lineView: LineChartView!
     
     let formatter = DateFormatter()
     var selectedDate = Date()
@@ -33,6 +35,12 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+         updateChartWithData()
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
@@ -42,6 +50,41 @@ class HomeViewController: UIViewController {
         let today = Date()
         calendarView?.scrollToDate(today)
         parseDate()
+    }
+    
+    func updateChartWithData(){
+        lineView.delegate = self
+        lineView.animate(yAxisDuration: 2.5, easingOption: .easeOutCubic)
+        lineView.chartDescription?.enabled = false
+        lineView.pinchZoomEnabled = false
+        lineView.dragEnabled = false
+        lineView.highlightPerTapEnabled = false
+        lineView.doubleTapToZoomEnabled = false
+        lineView.leftAxis.drawGridLinesEnabled = false
+        lineView.rightAxis.enabled = false
+        lineView.leftAxis.enabled = true
+        lineView.xAxis.enabled = false
+        lineView.legend.enabled = false
+        lineView.leftAxis.axisLineColor = UIColor.white
+        lineView.leftAxis.labelTextColor = UIColor.white
+        
+        var dataEntries = [ChartDataEntry]()
+        let tmp = ChartDataEntry(x: 1.0, y: 25.0)
+        dataEntries.append(tmp)
+        let tmp2 = ChartDataEntry(x: 2.0, y: 10.0)
+        dataEntries.append(tmp2)
+        let tmp3 = ChartDataEntry(x: 3.0, y: 15.0)
+        dataEntries.append(tmp3)
+        let tmp4 = ChartDataEntry(x: 4.0, y: 2.0)
+        dataEntries.append(tmp4)
+        
+        let chartDataSet = LineChartDataSet(values: dataEntries, label: nil)
+        chartDataSet.cubicIntensity = 0.2
+        chartDataSet.mode = .cubicBezier
+        
+        let chartData = LineChartData(dataSet: chartDataSet)
+        chartData.setDrawValues(false)
+        lineView.data = chartData
     }
     
     func parseDate(){

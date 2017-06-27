@@ -8,6 +8,8 @@ pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'JTAppleCalendar', '~> 7.0'
+pod 'Charts'
+
   # Pods for LiftTrack
 
   target 'LiftTrackTests' do
