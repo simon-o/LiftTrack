@@ -33,6 +33,10 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let today = Date()
@@ -55,6 +59,14 @@ class HomeViewController: UIViewController {
                     self.allDate.append(row["date"]!)
                 }
             }
+            var tabDate = [Date]()
+            for tmp in self.allDate{
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy MM dd"
+                let tmpdate = dateFormatter.date(from: tmp)
+                tabDate.append(tmpdate!)
+            }
+            self.calendarView.reloadDates(tabDate)
         })
     }
     
@@ -119,6 +131,19 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
             cell.selectedView.isHidden = false
         }else{
             cell.selectedView.isHidden = true
+        }
+        
+        for tmp in allDate{
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy MM dd"
+            let tmpdate = dateFormatter.date(from: tmp)
+            if (tmpdate?.compare(date) == .orderedSame){
+                cell.hasExercice.isHidden = false
+                break
+            }
+            else{
+                cell.hasExercice.isHidden = true
+            }
         }
         
         if (cellState.dateBelongsTo != .thisMonth){

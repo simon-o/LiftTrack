@@ -48,8 +48,10 @@ class RegisterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
     }
     
     @IBAction func creationTapped(_ sender: Any) {

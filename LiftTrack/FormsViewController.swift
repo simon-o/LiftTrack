@@ -80,8 +80,8 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func test(){
-        
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
