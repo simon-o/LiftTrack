@@ -15,15 +15,35 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
-    @IBOutlet weak var lineView: LineChartView!
+    @IBOutlet weak var chartView: BarChartView!
     
     let formatter = DateFormatter()
     var selectedDate = Date()
     var allDate = [String]()
     var ref = FIRDatabase.database().reference()
+    var hadFindToday = false
+    
+    var counteur = Array(repeating: 0, count: 6)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        chartView.delegate = self
+        chartView.chartDescription?.enabled = false
+        chartView.pinchZoomEnabled = false
+        chartView.dragEnabled = false
+        chartView.highlightPerTapEnabled = false
+        chartView.doubleTapToZoomEnabled = false
+        chartView.leftAxis.drawGridLinesEnabled = false
+        chartView.rightAxis.enabled = false
+        chartView.leftAxis.enabled = true
+        chartView.xAxis.enabled = true
+        chartView.xAxis.labelTextColor = UIColor.white
+        chartView.xAxis.drawGridLinesEnabled = false
+        chartView.xAxis.axisLineColor = UIColor.white
+        chartView.legend.enabled = false
+        chartView.leftAxis.axisLineColor = UIColor.white
+        chartView.leftAxis.labelTextColor = UIColor.white
         
         calendarView.visibleDates { (visibleDates) in
             self.displayMonthYear(visibleDates: visibleDates)
@@ -38,7 +58,6 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-         updateChartWithData()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
@@ -48,43 +67,116 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let today = Date()
-        calendarView?.scrollToDate(today)
+        if (hadFindToday == false){
+            calendarView?.scrollToDate(today)
+        }
         parseDate()
     }
     
     func updateChartWithData(){
-        lineView.delegate = self
-        lineView.animate(yAxisDuration: 2.5, easingOption: .easeOutCubic)
-        lineView.chartDescription?.enabled = false
-        lineView.pinchZoomEnabled = false
-        lineView.dragEnabled = false
-        lineView.highlightPerTapEnabled = false
-        lineView.doubleTapToZoomEnabled = false
-        lineView.leftAxis.drawGridLinesEnabled = false
-        lineView.rightAxis.enabled = false
-        lineView.leftAxis.enabled = true
-        lineView.xAxis.enabled = false
-        lineView.legend.enabled = false
-        lineView.leftAxis.axisLineColor = UIColor.white
-        lineView.leftAxis.labelTextColor = UIColor.white
+        if (hadFindToday == true){
+            chartView.animate(yAxisDuration: 2.5, easingOption: .easeOutCubic)
+            let format = NumberFormatter()
+            format.positivePrefix = "sem "
+            chartView.xAxis.valueFormatter = DefaultAxisValueFormatter(formatter: format)
+            
+            var count = Array(repeating: 0, count: 6)
+            var calendar = Calendar.current
+            calendar.timeZone = TimeZone(secondsFromGMT: 2*60*60)!
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy MM dd"
+            
+           let unique = allDate.removeDuplicates()
+            for tmp in unique{
+                let tmpdate = dateFormatter.date(from: tmp)
+                let datesAreInTheSameMonth = calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[1].date, toGranularity:.month)
+                if (datesAreInTheSameMonth == true){
+                    if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[1].date, toGranularity:.weekOfYear)){
+                        count[0] += 1
+                    }
+                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[8].date, toGranularity:.weekOfYear)){
+                        count[1] += 1
+                    }
+                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[15].date, toGranularity:.weekOfYear)){
+                        count[2] += 1
+                    }
+                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[22].date, toGranularity:.weekOfYear)){
+                        count[3] += 1
+                    }
+                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[29].date, toGranularity:.weekOfYear)){
+                        count[4] += 1
+                    }
+                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[36].date, toGranularity:.weekOfYear)){
+                        count[5] += 1
+                    }
+                }
+            }
+            
+//            for index in 1...calendarView.visibleDates().monthDates.count - 1{
+//                let cell = calendarView.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: calendarView.visibleDates().monthDates[index].indexPath) as! CalendarCollectionViewCell
+//                
+//                if (index > 1){
+//                    let tmpDate = calendarView.visibleDates().monthDates[index - 1].date
+//                    let datesAreInTheSameWeek = calendar.isDate(tmpDate, equalTo: calendarView.visibleDates().monthDates[index].date, toGranularity:.weekday)
+//                    
+//                    if (!datesAreInTheSameWeek){
+//                        week += 1
+//                    }
+//                }
+//                if (cell.hasExercice.isHidden == false){
+//                    count[calendarView.visibleDates().monthDates[index].indexPath[1]/7] += 1
+//                }
+//            }
+            
+            
+            
+            var dataEntries = [BarChartDataEntry]()
+            print(count)
+            for index in 0...count.count - 1{
+                let tmp = BarChartDataEntry(x: Double(index) + 1.0, y:Double(count[index]))
+                dataEntries.append(tmp)
+            }
+            
+            let chartDataSet = BarChartDataSet(values: dataEntries, label: nil)
+            let chartData = BarChartData(dataSet: chartDataSet)
+            chartData.setDrawValues(false)
+            chartData.barWidth = 0.3
+            chartView.data = chartData
+        }
         
-        var dataEntries = [ChartDataEntry]()
-        let tmp = ChartDataEntry(x: 1.0, y: 25.0)
-        dataEntries.append(tmp)
-        let tmp2 = ChartDataEntry(x: 2.0, y: 10.0)
-        dataEntries.append(tmp2)
-        let tmp3 = ChartDataEntry(x: 3.0, y: 15.0)
-        dataEntries.append(tmp3)
-        let tmp4 = ChartDataEntry(x: 4.0, y: 2.0)
-        dataEntries.append(tmp4)
         
-        let chartDataSet = LineChartDataSet(values: dataEntries, label: nil)
-        chartDataSet.cubicIntensity = 0.2
-        chartDataSet.mode = .cubicBezier
-        
-        let chartData = LineChartData(dataSet: chartDataSet)
-        chartData.setDrawValues(false)
-        lineView.data = chartData
+//        lineView.delegate = self
+//        lineView.animate(yAxisDuration: 2.5, easingOption: .easeOutCubic)
+//        lineView.chartDescription?.enabled = false
+//        lineView.pinchZoomEnabled = false
+//        lineView.dragEnabled = false
+//        lineView.highlightPerTapEnabled = false
+//        lineView.doubleTapToZoomEnabled = false
+//        lineView.leftAxis.drawGridLinesEnabled = false
+//        lineView.rightAxis.enabled = false
+//        lineView.leftAxis.enabled = true
+//        lineView.xAxis.enabled = false
+//        lineView.legend.enabled = false
+//        lineView.leftAxis.axisLineColor = UIColor.white
+//        lineView.leftAxis.labelTextColor = UIColor.white
+//        
+//        var dataEntries = [ChartDataEntry]()
+//        let tmp = ChartDataEntry(x: 1.0, y: 25.0)
+//        dataEntries.append(tmp)
+//        let tmp2 = ChartDataEntry(x: 2.0, y: 10.0)
+//        dataEntries.append(tmp2)
+//        let tmp3 = ChartDataEntry(x: 3.0, y: 15.0)
+//        dataEntries.append(tmp3)
+//        let tmp4 = ChartDataEntry(x: 4.0, y: 2.0)
+//        dataEntries.append(tmp4)
+//        
+//        let chartDataSet = LineChartDataSet(values: dataEntries, label: nil)
+//        chartDataSet.cubicIntensity = 0.2
+//        chartDataSet.mode = .cubicBezier
+//        
+//        let chartData = LineChartData(dataSet: chartDataSet)
+//        chartData.setDrawValues(false)
+//        lineView.data = chartData
     }
     
     func parseDate(){
@@ -110,6 +202,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                 tabDate.append(tmpdate!)
             }
             self.calendarView.reloadDates(tabDate)
+            self.updateChartWithData()
         })
     }
     
@@ -161,6 +254,7 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
             let str = formatter.string(from: today)
             if (str == cellState.text){
                 cell.isToday.isHidden = false
+                self.hadFindToday = true
             }
             else{
                 cell.isToday.isHidden = true
@@ -212,5 +306,21 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         self.displayMonthYear(visibleDates: visibleDates)
+        counteur = Array(repeating: 0, count: 6)
+        updateChartWithData()
+    }
+}
+
+extension Array where Element:Equatable {
+    func removeDuplicates() -> [Element] {
+        var result = [Element]()
+        
+        for value in self {
+            if result.contains(value) == false {
+                result.append(value)
+            }
+        }
+        
+        return result
     }
 }
