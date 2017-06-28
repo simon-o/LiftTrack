@@ -106,7 +106,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                     else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[29].date, toGranularity:.weekOfYear)){
                         count[4] += 1
                     }
-                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[36].date, toGranularity:.weekOfYear)){
+                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[32].date, toGranularity:.weekOfYear)){
                         count[5] += 1
                     }
                 }
@@ -202,7 +202,6 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                 tabDate.append(tmpdate!)
             }
             self.calendarView.reloadDates(tabDate)
-            self.updateChartWithData()
         })
     }
     
@@ -297,6 +296,7 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
         guard let validCell = cell as? CalendarCollectionViewCell else {return}
         validCell.selectedView.isHidden = false
         selectedDate = date
+        updateChartWithData()
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
@@ -307,7 +307,6 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         self.displayMonthYear(visibleDates: visibleDates)
         counteur = Array(repeating: 0, count: 6)
-        updateChartWithData()
     }
 }
 
