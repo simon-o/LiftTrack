@@ -24,7 +24,7 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
     var ref = FIRDatabase.database().reference()
     var hadFindToday = false
     var listSelected = [Int:Any]()
-    
+    var isAdding = false
     
     var counteur = Array(repeating: 0, count: 6)
     
@@ -76,6 +76,10 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         parseDate()
+        if (isAdding == true){
+            parseSelected(selectedDate)
+            isAdding = false
+        }
     }
     
     func updateChartWithData(){
@@ -125,9 +129,11 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
                 }
                 
                 let chartDataSet = BarChartDataSet(values: dataEntries, label: nil)
+                chartDataSet.setColor(UIColor(red: 86/255, green: 192/255, blue: 224/255, alpha: 1.0))
                 let chartData = BarChartData(dataSet: chartDataSet)
                 chartData.setDrawValues(false)
                 chartData.barWidth = 0.3
+                
                 
                 self.chartView.data = chartData
             }
@@ -228,6 +234,7 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
         if segue.identifier == "add"{
             if let dest = segue.destination as? FormsViewController{
                 dest.date = selectedDate
+                self.isAdding = true
             }
         }
     }
@@ -260,11 +267,12 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
                         }
                     }
                 }
-                
-                for index in 0...saveKeys.count - 1{
-                    self.listSelected[index] = tmp[saveKeys[index]]
+                if (saveKeys.count > 0){
+                    for index in 0...saveKeys.count - 1{
+                        self.listSelected[index] = tmp[saveKeys[index]]
+                    }
+                    self.tableView.reloadData()
                 }
-                self.tableView.reloadData()
             })
         }
     }
