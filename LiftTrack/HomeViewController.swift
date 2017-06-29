@@ -11,22 +11,31 @@ import JTAppleCalendar
 import Firebase
 import Charts
 
-class HomeViewController: UIViewController, ChartViewDelegate {
+class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var chartView: BarChartView!
+    @IBOutlet weak var tableView: UITableView!
     
     let formatter = DateFormatter()
     var selectedDate = Date()
     var allDate = [String]()
     var ref = FIRDatabase.database().reference()
     var hadFindToday = false
+    var listSelected = [Int:Any]()
+    
     
     var counteur = Array(repeating: 0, count: 6)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        let today = Date()
+        calendarView?.scrollToDate(today)
         
         chartView.delegate = self
         chartView.chartDescription?.enabled = false
@@ -49,7 +58,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             self.displayMonthYear(visibleDates: visibleDates)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -66,10 +75,6 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let today = Date()
-        if (hadFindToday == false){
-            calendarView?.scrollToDate(today)
-        }
         parseDate()
     }
     
@@ -86,97 +91,100 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy MM dd"
             
-           let unique = allDate.removeDuplicates()
-            for tmp in unique{
-                let tmpdate = dateFormatter.date(from: tmp)
-                let datesAreInTheSameMonth = calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[1].date, toGranularity:.month)
-                if (datesAreInTheSameMonth == true){
-                    if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[1].date, toGranularity:.weekOfYear)){
-                        count[0] += 1
-                    }
-                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[8].date, toGranularity:.weekOfYear)){
-                        count[1] += 1
-                    }
-                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[15].date, toGranularity:.weekOfYear)){
-                        count[2] += 1
-                    }
-                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[22].date, toGranularity:.weekOfYear)){
-                        count[3] += 1
-                    }
-                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[29].date, toGranularity:.weekOfYear)){
-                        count[4] += 1
-                    }
-                    else if (calendar.isDate(tmpdate!, equalTo: calendarView.visibleDates().monthDates[32].date, toGranularity:.weekOfYear)){
-                        count[5] += 1
+            DispatchQueue.init(label: "queue1").async {
+                let unique = self.allDate.removeDuplicates()
+                for tmp in unique{
+                    let tmpdate = dateFormatter.date(from: tmp)
+                    let datesAreInTheSameMonth = calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[1].date, toGranularity:.month)
+                    if (datesAreInTheSameMonth == true){
+                        if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[1].date, toGranularity:.weekOfYear)){
+                            count[0] += 1
+                        }
+                        else if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[8].date, toGranularity:.weekOfYear)){
+                            count[1] += 1
+                        }
+                        else if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[15].date, toGranularity:.weekOfYear)){
+                            count[2] += 1
+                        }
+                        else if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[22].date, toGranularity:.weekOfYear)){
+                            count[3] += 1
+                        }
+                        else if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[29].date, toGranularity:.weekOfYear)){
+                            count[4] += 1
+                        }
+                        else if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[32].date, toGranularity:.weekOfYear)){
+                            count[5] += 1
+                        }
                     }
                 }
+                
+                var dataEntries = [BarChartDataEntry]()
+                for index in 0...count.count - 1{
+                    let tmp = BarChartDataEntry(x: Double(index) + 1.0, y:Double(count[index]))
+                    dataEntries.append(tmp)
+                }
+                
+                let chartDataSet = BarChartDataSet(values: dataEntries, label: nil)
+                let chartData = BarChartData(dataSet: chartDataSet)
+                chartData.setDrawValues(false)
+                chartData.barWidth = 0.3
+                
+                self.chartView.data = chartData
             }
-            
-//            for index in 1...calendarView.visibleDates().monthDates.count - 1{
-//                let cell = calendarView.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: calendarView.visibleDates().monthDates[index].indexPath) as! CalendarCollectionViewCell
-//                
-//                if (index > 1){
-//                    let tmpDate = calendarView.visibleDates().monthDates[index - 1].date
-//                    let datesAreInTheSameWeek = calendar.isDate(tmpDate, equalTo: calendarView.visibleDates().monthDates[index].date, toGranularity:.weekday)
-//                    
-//                    if (!datesAreInTheSameWeek){
-//                        week += 1
-//                    }
-//                }
-//                if (cell.hasExercice.isHidden == false){
-//                    count[calendarView.visibleDates().monthDates[index].indexPath[1]/7] += 1
-//                }
-//            }
-            
-            
-            
-            var dataEntries = [BarChartDataEntry]()
-            print(count)
-            for index in 0...count.count - 1{
-                let tmp = BarChartDataEntry(x: Double(index) + 1.0, y:Double(count[index]))
-                dataEntries.append(tmp)
-            }
-            
-            let chartDataSet = BarChartDataSet(values: dataEntries, label: nil)
-            let chartData = BarChartData(dataSet: chartDataSet)
-            chartData.setDrawValues(false)
-            chartData.barWidth = 0.3
-            chartView.data = chartData
         }
+        //            for index in 1...calendarView.visibleDates().monthDates.count - 1{
+        //                let cell = calendarView.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: calendarView.visibleDates().monthDates[index].indexPath) as! CalendarCollectionViewCell
+        //
+        //                if (index > 1){
+        //                    let tmpDate = calendarView.visibleDates().monthDates[index - 1].date
+        //                    let datesAreInTheSameWeek = calendar.isDate(tmpDate, equalTo: calendarView.visibleDates().monthDates[index].date, toGranularity:.weekday)
+        //
+        //                    if (!datesAreInTheSameWeek){
+        //                        week += 1
+        //                    }
+        //                }
+        //                if (cell.hasExercice.isHidden == false){
+        //                    count[calendarView.visibleDates().monthDates[index].indexPath[1]/7] += 1
+        //                }
+        //            }
         
         
-//        lineView.delegate = self
-//        lineView.animate(yAxisDuration: 2.5, easingOption: .easeOutCubic)
-//        lineView.chartDescription?.enabled = false
-//        lineView.pinchZoomEnabled = false
-//        lineView.dragEnabled = false
-//        lineView.highlightPerTapEnabled = false
-//        lineView.doubleTapToZoomEnabled = false
-//        lineView.leftAxis.drawGridLinesEnabled = false
-//        lineView.rightAxis.enabled = false
-//        lineView.leftAxis.enabled = true
-//        lineView.xAxis.enabled = false
-//        lineView.legend.enabled = false
-//        lineView.leftAxis.axisLineColor = UIColor.white
-//        lineView.leftAxis.labelTextColor = UIColor.white
-//        
-//        var dataEntries = [ChartDataEntry]()
-//        let tmp = ChartDataEntry(x: 1.0, y: 25.0)
-//        dataEntries.append(tmp)
-//        let tmp2 = ChartDataEntry(x: 2.0, y: 10.0)
-//        dataEntries.append(tmp2)
-//        let tmp3 = ChartDataEntry(x: 3.0, y: 15.0)
-//        dataEntries.append(tmp3)
-//        let tmp4 = ChartDataEntry(x: 4.0, y: 2.0)
-//        dataEntries.append(tmp4)
-//        
-//        let chartDataSet = LineChartDataSet(values: dataEntries, label: nil)
-//        chartDataSet.cubicIntensity = 0.2
-//        chartDataSet.mode = .cubicBezier
-//        
-//        let chartData = LineChartData(dataSet: chartDataSet)
-//        chartData.setDrawValues(false)
-//        lineView.data = chartData
+        
+        
+        
+        
+        //        lineView.delegate = self
+        //        lineView.animate(yAxisDuration: 2.5, easingOption: .easeOutCubic)
+        //        lineView.chartDescription?.enabled = false
+        //        lineView.pinchZoomEnabled = false
+        //        lineView.dragEnabled = false
+        //        lineView.highlightPerTapEnabled = false
+        //        lineView.doubleTapToZoomEnabled = false
+        //        lineView.leftAxis.drawGridLinesEnabled = false
+        //        lineView.rightAxis.enabled = false
+        //        lineView.leftAxis.enabled = true
+        //        lineView.xAxis.enabled = false
+        //        lineView.legend.enabled = false
+        //        lineView.leftAxis.axisLineColor = UIColor.white
+        //        lineView.leftAxis.labelTextColor = UIColor.white
+        //
+        //        var dataEntries = [ChartDataEntry]()
+        //        let tmp = ChartDataEntry(x: 1.0, y: 25.0)
+        //        dataEntries.append(tmp)
+        //        let tmp2 = ChartDataEntry(x: 2.0, y: 10.0)
+        //        dataEntries.append(tmp2)
+        //        let tmp3 = ChartDataEntry(x: 3.0, y: 15.0)
+        //        dataEntries.append(tmp3)
+        //        let tmp4 = ChartDataEntry(x: 4.0, y: 2.0)
+        //        dataEntries.append(tmp4)
+        //
+        //        let chartDataSet = LineChartDataSet(values: dataEntries, label: nil)
+        //        chartDataSet.cubicIntensity = 0.2
+        //        chartDataSet.mode = .cubicBezier
+        //
+        //        let chartData = LineChartData(dataSet: chartDataSet)
+        //        chartData.setDrawValues(false)
+        //        lineView.data = chartData
     }
     
     func parseDate(){
@@ -202,6 +210,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                 tabDate.append(tmpdate!)
             }
             self.calendarView.reloadDates(tabDate)
+            self.updateChartWithData()
         })
     }
     
@@ -222,12 +231,73 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return listSelected.count
+    }
+    
+    func parseSelected(_ selectedDate: Date){
+        DispatchQueue.init(label: "queue3").async {
+            self.listSelected.removeAll()
+            self.ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exos").observeSingleEvent(of: .value, with: { (snap) in
+                if !snap.exists() { return }
+                
+                var keys = [String]()
+                let tmp = snap.value as! [String:Any]
+                for child in tmp{
+                    keys.append(child.key)
+                }
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy MM dd"
+                let tmpdateString = dateFormatter.string(from: selectedDate)
+                
+                var saveKeys = [String]()
+                for index in 0...keys.count - 1{
+                    if let row = tmp[keys[index]] as? [String:String]{
+                        if (row["date"] == tmpdateString){
+                            saveKeys.append(keys[index])
+                        }
+                    }
+                }
+                
+                for index in 0...saveKeys.count - 1{
+                    self.listSelected[index] = tmp[saveKeys[index]]
+                }
+                self.tableView.reloadData()
+            })
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListHomeTableViewCell else {
+            fatalError("unexpected IndePath")
+        }
+        if (indexPath.row % 2 == 0){
+            cell.backgroundColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1.0)
+        }else{
+            cell.backgroundColor = UIColor.black
+        }
+        
+        let element = listSelected[indexPath.row] as? [String:Any]
+
+        cell.exoName.text = element?["name"] as? String
+        if (indexPath.row == 0){
+            cell.date.text = element?["date"] as? String
+        }else{
+            cell.date.text = ""
+        }
+        cell.rep.text = String(format:"Rep: \(element?["rep"] ?? "")")
+        cell.serie.text = String(format:"Serie: \(element?["serie"] ?? "")")
+        cell.kg.text = String(format:"\(element?["KG"] ?? "") KG")
+        return cell
+    }
 }
 
 extension HomeViewController: JTAppleCalendarViewDataSource{
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-       formatter.dateFormat = "yyyy MM dd"
-
+        formatter.dateFormat = "yyyy MM dd"
+        
         let startDate = formatter.date(from:"2017 01 01")
         let endDate = formatter.date(from: "2030 12 31")
         
@@ -244,7 +314,7 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
         let today = Date()
         
         var calendar = Calendar.current
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        calendar.timeZone = TimeZone(secondsFromGMT: 2*60*60)!
         let datesAreInTheSameMonth = calendar.isDate(today, equalTo: cellState.date, toGranularity:.month)
         
         
@@ -296,7 +366,7 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
         guard let validCell = cell as? CalendarCollectionViewCell else {return}
         validCell.selectedView.isHidden = false
         selectedDate = date
-        updateChartWithData()
+        parseSelected(date)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
@@ -307,6 +377,7 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         self.displayMonthYear(visibleDates: visibleDates)
         counteur = Array(repeating: 0, count: 6)
+        updateChartWithData()
     }
 }
 
