@@ -95,7 +95,7 @@ class PickerDialog: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     /* Create the dialog view, and animate opening the dialog */
-    func show(title: String, doneButtonTitle: String = "Done", cancelButtonTitle: String = "Cancel", options: [[String: String]], selected: String? = nil, callback: @escaping PickerCallback) {
+    func show(title: String, doneButtonTitle: String = "Choisir", cancelButtonTitle: String = "Annuler", options: [[String: String]], selected: String? = nil, callback: @escaping PickerCallback) {
         self.titleLabel.text = title
         self.pickerData = options
         self.doneButton.setTitle(doneButtonTitle, for: .normal)
@@ -256,7 +256,18 @@ class PickerDialog: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         if sender.tag == kPickerDialogDoneButtonTag {
             let selectedIndex = self.picker.selectedRow(inComponent: 0)
             let selectedValue = self.pickerData[selectedIndex]["value"]
-            self.callback?(selectedValue!)
+             self.callback?(selectedValue!)
+//            if (self.pickerData.count > 0){
+//                if let selectedValue = self.pickerData[selectedIndex]["value"]{
+//                    self.callback?(selectedValue)
+//                }else
+//                {
+//                    self.callback?("")
+//                }
+//            }else{
+//                self.callback?("")
+//            }
+            
         }
 
         close()

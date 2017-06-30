@@ -341,12 +341,8 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
             cell.isToday.isHidden = true
         }
         
-        if (cellState.isSelected){
-            cell.selectedView.isHidden = false
-        }else{
-            cell.selectedView.isHidden = true
-        }
-        
+        cell.selectedView.isHidden = true
+        self.selectedDate = Date()
         for tmp in allDate{
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy MM dd"
@@ -380,6 +376,7 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let validCell = cell as? CalendarCollectionViewCell else {return}
         validCell.selectedView.isHidden = true
+        
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {

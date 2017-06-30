@@ -39,6 +39,13 @@ class RegisterViewController: UIViewController {
         email.layer.borderWidth = 0.0
         password.layer.cornerRadius = 21.0
         password.layer.borderWidth = 0.0
+    
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     override func didReceiveMemoryWarning() {

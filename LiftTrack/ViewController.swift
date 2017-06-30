@@ -34,6 +34,13 @@ class ViewController: UIViewController {
         //Debug
         email.text = "lol@lol.com"
         password.text = "lollol"
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     override func didReceiveMemoryWarning() {

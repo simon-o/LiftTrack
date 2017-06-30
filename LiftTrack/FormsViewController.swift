@@ -27,9 +27,12 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
     var date:Date!
     
     var exos = [String]()
+    var exoNameList = [[String:String]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        parseExo()
 
         exoName.attributedPlaceholder = NSAttributedString(string: exoName.placeholder!, attributes: [NSForegroundColorAttributeName : UIColor.white])
         exoRep.attributedPlaceholder = NSAttributedString(string: exoRep.placeholder!, attributes: [NSForegroundColorAttributeName : UIColor.white])
@@ -84,12 +87,43 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
         return .lightContent
     }
     
+    func containIn(_ str: String) -> Bool{
+        if (exoNameList.count > 0){
+            for _ in 0...exoNameList.count - 1{
+                if (str == exoNameList[0]["value"]){
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func parseExo(){
+        ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exos").observeSingleEvent(of: .value, with: { (snap) in
+            if !snap.exists() { return }
+            
+            var keys = [String]()
+            let tmp = snap.value as! [String:Any]
+            for child in tmp{
+                keys.append(child.key)
+            }
+            
+            for index in 0...keys.count - 1{
+                if let row = tmp[keys[index]] as? [String:String]{
+                    if (self.containIn(row["name"]!) == false){
+                        self.exoNameList.append(["value":row["name"]!])
+                    }
+                }
+            }
+        })
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let picker = PickerDialog()
         
         switch textField.tag {
         case 0:
-            picker.show(title: "Choisissez l'exercice", options: [["value":"l"],["value":"p"],["value":"g"]]) { (response) in
+            picker.show(title: "Choisissez l'exercice", options: exoNameList) { (response) in
                 self.exoName.text = response
             }
         case 1:

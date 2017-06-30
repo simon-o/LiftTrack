@@ -24,6 +24,7 @@
 		D6278CA51EF9247200D07C73 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6278CA41EF9247200D07C73 /* HomeViewController.swift */; };
 		D68E277E1EFE781400091D18 /* PickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68E277D1EFE781400091D18 /* PickerDialog.swift */; };
 		D68E27801EFE799700091D18 /* FormsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68E277F1EFE799700091D18 /* FormsViewController.swift */; };
+		D695F2B21F0654110042A2B9 /* ManageAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D695F2B11F0654110042A2B9 /* ManageAccountViewController.swift */; };
 		D6A657C61EFA736C00B5A21B /* ABChanel-PB-Regular-L.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6A657BF1EFA70A800B5A21B /* ABChanel-PB-Regular-L.otf */; };
 		D6A657C71EFA736C00B5A21B /* ABChanel-PB-Regular-M.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6A657C01EFA70A800B5A21B /* ABChanel-PB-Regular-M.otf */; };
 		D6A657C81EFA736C00B5A21B /* ABChanel-PB-Regular-S.otf in Resources */ = {isa = PBXBuildFile; fileRef = D6A657C11EFA70A800B5A21B /* ABChanel-PB-Regular-S.otf */; };
@@ -80,6 +81,7 @@
 		D6278CA41EF9247200D07C73 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D68E277D1EFE781400091D18 /* PickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerDialog.swift; sourceTree = "<group>"; };
 		D68E277F1EFE799700091D18 /* FormsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormsViewController.swift; sourceTree = "<group>"; };
+		D695F2B11F0654110042A2B9 /* ManageAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountViewController.swift; sourceTree = "<group>"; };
 		D6A657BF1EFA70A800B5A21B /* ABChanel-PB-Regular-L.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ABChanel-PB-Regular-L.otf"; sourceTree = "<group>"; };
 		D6A657C01EFA70A800B5A21B /* ABChanel-PB-Regular-M.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ABChanel-PB-Regular-M.otf"; sourceTree = "<group>"; };
 		D6A657C11EFA70A800B5A21B /* ABChanel-PB-Regular-S.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ABChanel-PB-Regular-S.otf"; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				D6278C6C1EF907B200D07C73 /* Assets.xcassets */,
 				D6278C6E1EF907B200D07C73 /* LaunchScreen.storyboard */,
 				D6A657C51EFA70B800B5A21B /* Ressources */,
+				D695F2B11F0654110042A2B9 /* ManageAccountViewController.swift */,
 			);
 			path = LiftTrack;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D62211D31EFBA012005B590B /* CalendarCollectionViewCell.swift in Sources */,
+				D695F2B21F0654110042A2B9 /* ManageAccountViewController.swift in Sources */,
 				D6278CA51EF9247200D07C73 /* HomeViewController.swift in Sources */,
 				D61B89671F04E9C1006F544D /* ListHomeTableViewCell.swift in Sources */,
 				D68E27801EFE799700091D18 /* FormsViewController.swift in Sources */,
