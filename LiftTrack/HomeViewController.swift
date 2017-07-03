@@ -328,7 +328,10 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
         
         if (datesAreInTheSameMonth == true){
             formatter.dateFormat = "dd"
-            let str = formatter.string(from: today)
+            var str = formatter.string(from: today)
+            if (str.characters.first == "0"){
+                str.remove(at: str.startIndex)
+            }
             if (str == cellState.text){
                 cell.isToday.isHidden = false
                 self.hadFindToday = true
