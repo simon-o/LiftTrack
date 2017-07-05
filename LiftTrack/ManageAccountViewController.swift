@@ -23,6 +23,8 @@ class ManageAccountViewController: UIViewController {
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: 20.0, height: pass.frame.size.height))
         pass.leftView = padding
         pass.leftViewMode = UITextFieldViewMode.always
+        pass.layer.cornerRadius = 21.0
+        pass.layer.borderWidth = 0.0
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
