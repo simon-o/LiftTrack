@@ -14,12 +14,19 @@ class ListinfoViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     
     var ref = FIRDatabase.database().reference()
+    var keysName = [String]()
+    var finalDict = [String:[String]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         parseDate()
     }
@@ -38,37 +45,38 @@ class ListinfoViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func parseDate(){
-        ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exos").observeSingleEvent(of: .value, with: { (snap) in
+        ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exosList").observeSingleEvent(of: .value, with: { (snap) in
             if !snap.exists() { return }
             
-            var keys = [String]()
-            let tmp = snap.value as! [String:Any]
-            for child in tmp{
-                keys.append(child.key)
-            }
             
-            for index in 0...keys.count - 1{
-                if let row = tmp[keys[index]] as? [String:[Any]]{
+            let tmp = snap.value as! [String:[String:[String:String]]]
+            for child in tmp{
+                self.keysName.append(child.key)
+                
+                let rows = child.value
+                for index in rows{
+                    if (self.finalDict[child.key] == nil){
+                        self.finalDict[child.key] = [String]()
+                    }
+                    self.finalDict[child.key]?.append(rows[index.key]?["KG"] ?? "")
                 }
             }
+
+            self.tableView.reloadData()
+            
         })
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return keysName.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0){
-        return 2
-        }
-        else{
-            return 0
-        }
+        return finalDict[keysName[section]]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "test"
+        return keysName[section]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

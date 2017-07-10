@@ -199,7 +199,7 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
                 formatter.dateFormat = "yyyy MM dd"
                 let tmpDate = formatter.string(from: date)
                 ref.child("users").child(user).child("exos").childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDate])
-                ref.child("users").child(user).child("exosList").child(exoName.text!).childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDate])
+                ref.child("users").child(user).child("exosList").child(exoName.text!).childByAutoId().setValue(["KG": exoKG.text!])
                 self.dismiss(animated: true, completion: nil)
             }
         }
