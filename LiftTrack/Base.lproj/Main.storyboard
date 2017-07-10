@@ -85,7 +85,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lift Track" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9o-aU-8QY">
-                                <rect key="frame" x="148.33333333333331" y="110" width="118.99999999999994" height="22.333333333333343"/>
+                                <rect key="frame" x="148" y="110" width="119" height="22.333333333333343"/>
                                 <fontDescription key="fontDescription" name="ABChanelPBSemiBoldL" family="ABChanel PB SemiBold L" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -646,10 +646,10 @@
             </objects>
             <point key="canvasLocation" x="2487" y="36"/>
         </scene>
-        <!--View Controller-->
+        <!--Listinfo View Controller-->
         <scene sceneID="IHs-00-bPQ">
             <objects>
-                <viewController id="qCq-Fd-U7w" sceneMemberID="viewController">
+                <viewController id="qCq-Fd-U7w" customClass="ListinfoViewController" customModule="LiftTrack" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DBN-eY-mdr"/>
                         <viewControllerLayoutGuide type="bottom" id="ff4-gJ-pW3"/>
@@ -659,26 +659,73 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e1V-Kj-f0u">
-                                <rect key="frame" x="355" y="20" width="32" height="30"/>
-                                <state key="normal" title="ADD"/>
+                                <rect key="frame" x="360" y="20" width="39" height="32"/>
+                                <fontDescription key="fontDescription" name="ABChanelPBRegularL" family="ABChanel PB Regular L" pointSize="15"/>
+                                <state key="normal" title="ADD">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
-                                    <segue destination="3i8-PA-z7D" kind="show" id="7bc-Ya-VyE"/>
+                                    <segue destination="3i8-PA-z7D" kind="show" identifier="add" id="7bc-Ya-VyE"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="54" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rtq-kC-nKB">
+                                <rect key="frame" x="0.0" y="70" width="414" height="617"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell1" id="z59-aC-Dmf" customClass="ListGrpahTableViewCell" customModule="LiftTrack" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="54"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z59-aC-Dmf" id="rNN-3L-xtd">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGr-hl-qnD">
+                                                    <rect key="frame" x="186" y="16" width="50" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell2" id="mYf-lD-dte" customClass="ListInfoTableViewCell" customModule="LiftTrack" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="82" width="414" height="54"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mYf-lD-dte" id="fI9-8c-Erl">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4s-fU-bTD">
+                                                    <rect key="frame" x="186" y="16" width="52" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="e1V-Kj-f0u" secondAttribute="trailing" constant="7" id="bvO-Go-ccx"/>
+                            <constraint firstAttribute="trailing" secondItem="e1V-Kj-f0u" secondAttribute="trailing" constant="15" id="bvO-Go-ccx"/>
                             <constraint firstItem="e1V-Kj-f0u" firstAttribute="top" secondItem="DBN-eY-mdr" secondAttribute="bottom" id="fxi-hf-gNM"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="dumbbell-with-weights-outline" id="sfn-d7-hfg">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="tableView" destination="rtq-kC-nKB" id="Hdy-lK-kKH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZQ-zg-bJe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1571" y="816"/>
+            <point key="canvasLocation" x="1569.5652173913045" y="815.21739130434787"/>
         </scene>
         <!--Photo-->
         <scene sceneID="QaC-nY-goL">
@@ -714,7 +761,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb8-ib-nPW">
-                                <rect key="frame" x="152.33333333333331" y="627" width="109.99999999999994" height="28"/>
+                                <rect key="frame" x="152" y="627" width="110" height="28"/>
                                 <fontDescription key="fontDescription" name="ABChanelPBRegularS" family="ABChanel PB Regular S" pointSize="12"/>
                                 <state key="normal" title="Deconnexion">
                                     <color key="titleColor" red="0.81239265203475952" green="0.25184357166290283" blue="0.31990900635719299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -742,7 +789,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.054901960780000002" green="0.054901960780000002" blue="0.062745098040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="zb8-ib-nPW" firstAttribute="centerX" secondItem="oAJ-tu-mmy" secondAttribute="centerX" id="JlN-hy-Upr"/>
                             <constraint firstItem="yzg-pz-jCV" firstAttribute="top" secondItem="zb8-ib-nPW" secondAttribute="bottom" constant="32" id="Kvy-Ns-rAy"/>

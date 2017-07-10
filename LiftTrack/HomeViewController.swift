@@ -138,26 +138,6 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
                 self.chartView.data = chartData
             }
         }
-        //            for index in 1...calendarView.visibleDates().monthDates.count - 1{
-        //                let cell = calendarView.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: calendarView.visibleDates().monthDates[index].indexPath) as! CalendarCollectionViewCell
-        //
-        //                if (index > 1){
-        //                    let tmpDate = calendarView.visibleDates().monthDates[index - 1].date
-        //                    let datesAreInTheSameWeek = calendar.isDate(tmpDate, equalTo: calendarView.visibleDates().monthDates[index].date, toGranularity:.weekday)
-        //
-        //                    if (!datesAreInTheSameWeek){
-        //                        week += 1
-        //                    }
-        //                }
-        //                if (cell.hasExercice.isHidden == false){
-        //                    count[calendarView.visibleDates().monthDates[index].indexPath[1]/7] += 1
-        //                }
-        //            }
-        
-        
-        
-        
-        
         
         //        lineView.delegate = self
         //        lineView.animate(yAxisDuration: 2.5, easingOption: .easeOutCubic)

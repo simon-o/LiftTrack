@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		4107DDBC2AE63E46AAAF0EE5 /* Pods_LiftTrack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95E0CF0E3A13EB2634909E13 /* Pods_LiftTrack.framework */; };
 		989276608E9C56B36DC3A1E5 /* Pods_LiftTrackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5AC8A93730E90DA1A15EB16 /* Pods_LiftTrackTests.framework */; };
+		B43160961F13755600DAA33F /* ListInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43160951F13755600DAA33F /* ListInfoTableViewCell.swift */; };
+		B43160981F13756500DAA33F /* ListGrpahTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43160971F13756500DAA33F /* ListGrpahTableViewCell.swift */; };
+		B431609A1F1375F000DAA33F /* ListinfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43160991F1375F000DAA33F /* ListinfoViewController.swift */; };
 		D61B89671F04E9C1006F544D /* ListHomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61B89661F04E9C1006F544D /* ListHomeTableViewCell.swift */; };
 		D62211D31EFBA012005B590B /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62211D21EFBA012005B590B /* CalendarCollectionViewCell.swift */; };
 		D6278C631EF907B200D07C73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6278C621EF907B200D07C73 /* AppDelegate.swift */; };
@@ -60,6 +63,9 @@
 		809EA4D0AA9806A28CE00064 /* Pods-LiftTrackUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiftTrackUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LiftTrackUITests/Pods-LiftTrackUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		95E0CF0E3A13EB2634909E13 /* Pods_LiftTrack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiftTrack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3D415B995DC8B6B620BB7E8 /* Pods_LiftTrackUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LiftTrackUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B43160951F13755600DAA33F /* ListInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListInfoTableViewCell.swift; sourceTree = "<group>"; };
+		B43160971F13756500DAA33F /* ListGrpahTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListGrpahTableViewCell.swift; sourceTree = "<group>"; };
+		B43160991F1375F000DAA33F /* ListinfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListinfoViewController.swift; sourceTree = "<group>"; };
 		D61B89661F04E9C1006F544D /* ListHomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListHomeTableViewCell.swift; sourceTree = "<group>"; };
 		D62211D21EFBA012005B590B /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		D6278C5F1EF907B200D07C73 /* LiftTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiftTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +148,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B43160941F13752100DAA33F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				D61B89661F04E9C1006F544D /* ListHomeTableViewCell.swift */,
+				B43160951F13755600DAA33F /* ListInfoTableViewCell.swift */,
+				B43160971F13756500DAA33F /* ListGrpahTableViewCell.swift */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		D6278C561EF907B200D07C73 = {
 			isa = PBXGroup;
 			children = (
@@ -174,7 +190,8 @@
 				D6278C641EF907B200D07C73 /* ViewController.swift */,
 				D62211D21EFBA012005B590B /* CalendarCollectionViewCell.swift */,
 				D68E277F1EFE799700091D18 /* FormsViewController.swift */,
-				D61B89661F04E9C1006F544D /* ListHomeTableViewCell.swift */,
+				B43160991F1375F000DAA33F /* ListinfoViewController.swift */,
+				B43160941F13752100DAA33F /* Cell */,
 				D6278C661EF907B200D07C73 /* Main.storyboard */,
 				D6278C6C1EF907B200D07C73 /* Assets.xcassets */,
 				D6278C6E1EF907B200D07C73 /* LaunchScreen.storyboard */,
@@ -509,11 +526,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43160981F13756500DAA33F /* ListGrpahTableViewCell.swift in Sources */,
 				D62211D31EFBA012005B590B /* CalendarCollectionViewCell.swift in Sources */,
 				D695F2B21F0654110042A2B9 /* ManageAccountViewController.swift in Sources */,
 				D6278CA51EF9247200D07C73 /* HomeViewController.swift in Sources */,
 				D61B89671F04E9C1006F544D /* ListHomeTableViewCell.swift in Sources */,
+				B43160961F13755600DAA33F /* ListInfoTableViewCell.swift in Sources */,
 				D68E27801EFE799700091D18 /* FormsViewController.swift in Sources */,
+				B431609A1F1375F000DAA33F /* ListinfoViewController.swift in Sources */,
 				D68E277E1EFE781400091D18 /* PickerDialog.swift in Sources */,
 				D6278C6B1EF907B200D07C73 /* LiftTrack.xcdatamodeld in Sources */,
 				D6278C651EF907B200D07C73 /* ViewController.swift in Sources */,
