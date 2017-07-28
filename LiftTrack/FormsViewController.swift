@@ -89,31 +89,26 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
     
     func containIn(_ str: String) -> Bool{
         if (exoNameList.count > 0){
-            for _ in 0...exoNameList.count - 1{
-                if (str == exoNameList[0]["value"]){
+            if (exoNameList.contains(where: { (row) -> Bool in
+                if (str == row["value"]){
                     return true
                 }
+                return false
+            })
+                ){
+                return true
             }
         }
         return false
     }
     
     func parseExo(){
-        ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exos").observeSingleEvent(of: .value, with: { (snap) in
+        ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exosList").observeSingleEvent(of: .value, with: { (snap) in
             if !snap.exists() { return }
             
-            var keys = [String]()
             let tmp = snap.value as! [String:Any]
-            for child in tmp{
-                keys.append(child.key)
-            }
-            
-            for index in 0...keys.count - 1{
-                if let row = tmp[keys[index]] as? [String:String]{
-                    if (self.containIn(row["name"]!) == false){
-                        self.exoNameList.append(["value":row["name"]!])
-                    }
-                }
+            for index in tmp{
+                self.exoNameList.append(["value" : index.key])
             }
         })
     }
@@ -123,8 +118,13 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
         
         switch textField.tag {
         case 0:
-            picker.show(title: "Choisissez l'exercice", options: exoNameList) { (response) in
-                self.exoName.text = response
+            if (exoNameList.count > 0){
+                picker.show(title: "Choisissez l'exercice", options: exoNameList) { (response) in
+                    self.exoName.text = response
+                }
+            }
+            else{
+                addExoTapped(self)
             }
         case 1:
             var i = 0
@@ -169,7 +169,6 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "Annuler", style: UIAlertActionStyle.cancel, handler: nil))
             alert.addTextField(configurationHandler: { (configurationTextField) in
             })
-        
         alert.addAction(UIAlertAction(title: "Ajouter", style: UIAlertActionStyle.default, handler:{ (UIAlertAction)in
             if let textField = alert.textFields?.first?.text {
                 self.exos.append(textField)
@@ -198,8 +197,9 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy MM dd"
                 let tmpDate = formatter.string(from: date)
-                ref.child("users").child(user).child("exos").childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDate])
-                ref.child("users").child(user).child("exosList").child(exoName.text!).childByAutoId().setValue(["KG": exoKG.text!])
+                ref.child("users").child(user).child("exosList").child(exoName.text!).childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDate])
+//                ref.child("users").child(user).child("exos").childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDate])
+                
                 self.dismiss(animated: true, completion: nil)
             }
         }

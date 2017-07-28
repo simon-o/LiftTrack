@@ -312,7 +312,7 @@
 				TargetAttributes = {
 					D6278C5E1EF907B200D07C73 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 43N6QXKADX;
+						DevelopmentTeam = 84462RG9G5;
 						ProvisioningStyle = Automatic;
 					};
 					D6278C751EF907B200D07C73 = {
@@ -693,7 +693,7 @@
 			baseConfigurationReference = 022D39A0984029C5323C042C /* Pods-LiftTrack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 43N6QXKADX;
+				DEVELOPMENT_TEAM = 84462RG9G5;
 				INFOPLIST_FILE = LiftTrack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Viseo-Digital.LiftTrack";
@@ -708,7 +708,7 @@
 			baseConfigurationReference = 452F139087F3127A56955F1B /* Pods-LiftTrack.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 43N6QXKADX;
+				DEVELOPMENT_TEAM = 84462RG9G5;
 				INFOPLIST_FILE = LiftTrack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Viseo-Digital.LiftTrack";

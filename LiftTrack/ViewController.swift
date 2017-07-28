@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         password.layer.borderWidth = 0.0
         
         //Debug
-        email.text = "lol@lol.com"
+        email.text = "lol1@lol.fr"
         password.text = "lollol"
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")

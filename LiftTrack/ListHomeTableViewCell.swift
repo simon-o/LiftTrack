@@ -16,6 +16,8 @@ class ListHomeTableViewCell: UITableViewCell {
     @IBOutlet weak var rep: UILabel!
     @IBOutlet weak var serie: UILabel!
     
+    var idExo = String()
+    var idExoList = String()
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -24,6 +24,7 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
     var ref = FIRDatabase.database().reference()
     var hadFindToday = false
     var listSelected = [Int:Any]()
+    var keysSelected = [String]()
     var isAdding = false
     
     var counteur = Array(repeating: 0, count: 6)
@@ -116,7 +117,7 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
                         else if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[29].date, toGranularity:.weekOfYear)){
                             count[4] += 1
                         }
-                        else if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[32].date, toGranularity:.weekOfYear)){
+                        else if (calendar.isDate(tmpdate!, equalTo: self.calendarView.visibleDates().monthDates[30].date, toGranularity:.weekOfYear)){
                             count[5] += 1
                         }
                     }
@@ -138,64 +139,35 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
                 self.chartView.data = chartData
             }
         }
-        
-        //        lineView.delegate = self
-        //        lineView.animate(yAxisDuration: 2.5, easingOption: .easeOutCubic)
-        //        lineView.chartDescription?.enabled = false
-        //        lineView.pinchZoomEnabled = false
-        //        lineView.dragEnabled = false
-        //        lineView.highlightPerTapEnabled = false
-        //        lineView.doubleTapToZoomEnabled = false
-        //        lineView.leftAxis.drawGridLinesEnabled = false
-        //        lineView.rightAxis.enabled = false
-        //        lineView.leftAxis.enabled = true
-        //        lineView.xAxis.enabled = false
-        //        lineView.legend.enabled = false
-        //        lineView.leftAxis.axisLineColor = UIColor.white
-        //        lineView.leftAxis.labelTextColor = UIColor.white
-        //
-        //        var dataEntries = [ChartDataEntry]()
-        //        let tmp = ChartDataEntry(x: 1.0, y: 25.0)
-        //        dataEntries.append(tmp)
-        //        let tmp2 = ChartDataEntry(x: 2.0, y: 10.0)
-        //        dataEntries.append(tmp2)
-        //        let tmp3 = ChartDataEntry(x: 3.0, y: 15.0)
-        //        dataEntries.append(tmp3)
-        //        let tmp4 = ChartDataEntry(x: 4.0, y: 2.0)
-        //        dataEntries.append(tmp4)
-        //
-        //        let chartDataSet = LineChartDataSet(values: dataEntries, label: nil)
-        //        chartDataSet.cubicIntensity = 0.2
-        //        chartDataSet.mode = .cubicBezier
-        //
-        //        let chartData = LineChartData(dataSet: chartDataSet)
-        //        chartData.setDrawValues(false)
-        //        lineView.data = chartData
     }
     
     func parseDate(){
-        ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exos").observeSingleEvent(of: .value, with: { (snap) in
-            if !snap.exists() { return }
+        ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exosList").observeSingleEvent(of: .value, with: { (snap) in
+            self.allDate = [String]()
             
-            var keys = [String]()
-            let tmp = snap.value as! [String:Any]
-            for child in tmp{
-                keys.append(child.key)
-            }
-            
-            for index in 0...keys.count - 1{
-                if let row = tmp[keys[index]] as? [String:String]{
-                    self.allDate.append(row["date"]!)
+            if snap.exists() {
+                var keys = [String]()
+                let tmp = snap.value as! [String:[String:[String:String]]]
+                for child in tmp{
+                    keys.append(child.key)
+                }
+                
+                for test in tmp{
+                    for test2 in test.value{
+                        let dict = test2.value
+                        self.allDate.append(dict["date"]!)
+                    }
+                }
+                
+                var tabDate = [Date]()
+                for tmp in self.allDate{
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy MM dd"
+                    let tmpdate = dateFormatter.date(from: tmp)
+                    tabDate.append(tmpdate!)
                 }
             }
-            var tabDate = [Date]()
-            for tmp in self.allDate{
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy MM dd"
-                let tmpdate = dateFormatter.date(from: tmp)
-                tabDate.append(tmpdate!)
-            }
-            self.calendarView.reloadDates(tabDate)
+            self.calendarView.reloadData()
             self.updateChartWithData()
         })
     }
@@ -223,34 +195,59 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
         return listSelected.count
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        let more = UITableViewRowAction(style: .normal, title: "Modifier") { action, index in
+            print("modify button tapped")
+        }
+        more.backgroundColor = .orange
+        
+        let favorite = UITableViewRowAction(style: .normal, title: "Supprimer") { action, index in
+            let cell = tableView.cellForRow(at: index) as! ListHomeTableViewCell
+            self.listSelected.removeValue(forKey: index.row)
+            self.ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exosList").child(cell.exoName.text!).child(self.keysSelected[index.row]).removeValue()
+            self.parseDate()
+            tableView.deleteRows(at: [index], with: .automatic)
+        }
+        favorite.backgroundColor = .red
+        
+        return [favorite, more]
+    }
+    
     func parseSelected(_ selectedDate: Date){
         DispatchQueue.init(label: "queue3").async {
             self.listSelected.removeAll()
-            self.ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exos").observeSingleEvent(of: .value, with: { (snap) in
+            self.ref.child("users").child(UserDefaults.standard.string(forKey: "userUID")!).child("exosList").observeSingleEvent(of: .value, with: { (snap) in
+                self.keysSelected = [String]()
+                self.listSelected = [Int:Any]()
                 if !snap.exists() { return }
                 
-                var keys = [String]()
-                let tmp = snap.value as! [String:Any]
+                var firstKeys = [String]()
+                let tmp = snap.value as! [String:[String:[String:String]]]
+                
                 for child in tmp{
-                    keys.append(child.key)
+                    firstKeys.append(child.key)
                 }
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy MM dd"
                 let tmpdateString = dateFormatter.string(from: selectedDate)
                 
-                var saveKeys = [String]()
-                for index in 0...keys.count - 1{
-                    if let row = tmp[keys[index]] as? [String:String]{
-                        if (row["date"] == tmpdateString){
-                            saveKeys.append(keys[index])
+                for test in tmp{
+                    var count = 0
+                    for test2 in test.value{
+                        let dict = test2.value
+                        if (dict["date"] == tmpdateString){
+                            self.listSelected[count] = dict
+                            self.keysSelected.append(test2.key)
+                            count += 1
                         }
                     }
                 }
-                if (saveKeys.count > 0){
-                    for index in 0...saveKeys.count - 1{
-                        self.listSelected[index] = tmp[saveKeys[index]]
-                    }
+                if self.listSelected.count > 0{
                     self.tableView.reloadData()
                 }
             })
@@ -261,6 +258,7 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ListCell", for: indexPath) as? ListHomeTableViewCell else {
             fatalError("unexpected IndePath")
         }
+        cell.selectionStyle = .none
         if (indexPath.row % 2 == 0){
             cell.backgroundColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1.0)
         }else{
@@ -297,8 +295,7 @@ extension HomeViewController: JTAppleCalendarViewDataSource{
 extension HomeViewController: JTAppleCalendarViewDelegate{
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CalendarCollectionViewCell
-        cell.dataLabel.text  = cellState.text
-        
+        cell.dataLabel.text = cellState.text
         let today = Date()
         
         var calendar = Calendar.current
@@ -325,7 +322,8 @@ extension HomeViewController: JTAppleCalendarViewDelegate{
         }
         
         cell.selectedView.isHidden = true
-        self.selectedDate = Date()
+        cell.hasExercice.isHidden = true
+        
         for tmp in allDate{
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy MM dd"
