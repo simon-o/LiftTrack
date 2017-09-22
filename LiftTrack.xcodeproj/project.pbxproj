@@ -158,6 +158,16 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		B4FDF3B71F48334D0027F84B /* views */ = {
+			isa = PBXGroup;
+			children = (
+				D6278C661EF907B200D07C73 /* Main.storyboard */,
+				D6278C6C1EF907B200D07C73 /* Assets.xcassets */,
+				D6278C6E1EF907B200D07C73 /* LaunchScreen.storyboard */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
 		D6278C561EF907B200D07C73 = {
 			isa = PBXGroup;
 			children = (
@@ -192,9 +202,7 @@
 				D68E277F1EFE799700091D18 /* FormsViewController.swift */,
 				B43160991F1375F000DAA33F /* ListinfoViewController.swift */,
 				B43160941F13752100DAA33F /* Cell */,
-				D6278C661EF907B200D07C73 /* Main.storyboard */,
-				D6278C6C1EF907B200D07C73 /* Assets.xcassets */,
-				D6278C6E1EF907B200D07C73 /* LaunchScreen.storyboard */,
+				B4FDF3B71F48334D0027F84B /* views */,
 				D6A657C51EFA70B800B5A21B /* Ressources */,
 				D695F2B11F0654110042A2B9 /* ManageAccountViewController.swift */,
 			);
@@ -308,12 +316,12 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0830;
-				ORGANIZATIONNAME = "Viseo Digital";
+				ORGANIZATIONNAME = "antoine simon";
 				TargetAttributes = {
 					D6278C5E1EF907B200D07C73 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 84462RG9G5;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 43N6QXKADX;
+						ProvisioningStyle = Manual;
 					};
 					D6278C751EF907B200D07C73 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -693,11 +701,13 @@
 			baseConfigurationReference = 022D39A0984029C5323C042C /* Pods-LiftTrack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 84462RG9G5;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = LiftTrack/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Viseo-Digital.LiftTrack";
+				PRODUCT_BUNDLE_IDENTIFIER = antoinesimon.LiftTrack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -708,11 +718,15 @@
 			baseConfigurationReference = 452F139087F3127A56955F1B /* Pods-LiftTrack.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 84462RG9G5;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = 43N6QXKADX;
 				INFOPLIST_FILE = LiftTrack/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Viseo-Digital.LiftTrack";
+				PRODUCT_BUNDLE_IDENTIFIER = antoinesimon.LiftTrack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3cc56d9c-f63f-42e6-adcd-da2a156dddbf";
+				PROVISIONING_PROFILE_SPECIFIER = LiftTrackNew;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

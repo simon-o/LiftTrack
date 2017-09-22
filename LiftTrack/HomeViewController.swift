@@ -201,7 +201,17 @@ class HomeViewController: UIViewController, ChartViewDelegate, UITableViewDelega
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let more = UITableViewRowAction(style: .normal, title: "Modifier") { action, index in
-            print("modify button tapped")
+            let cell = tableView.cellForRow(at: index) as! ListHomeTableViewCell
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "forms") as? FormsViewController
+            controller?.modif = true
+            controller?.node = self.keysSelected[index.row]
+            controller?.tmpDate = cell.date.text!
+            controller?.tmpKG = cell.kg.text!.substring(to: cell.kg.text!.index(cell.kg.text!.endIndex, offsetBy: -3))
+            controller?.tmpName = cell.exoName.text!
+            controller?.tmpRep = cell.rep.text!.substring(from: cell.kg.text!.index(cell.kg.text!.startIndex, offsetBy: 5))
+            controller?.tmpSerie = cell.serie.text!.substring(from: cell.serie.text!.index(cell.serie.text!.startIndex, offsetBy: 7))
+            self.present(controller!, animated: true, completion: nil)
         }
         more.backgroundColor = .orange
         

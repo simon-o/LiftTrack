@@ -17,7 +17,10 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var exoRep: UITextField!
     @IBOutlet weak var exoSerie: UITextField!
     @IBOutlet weak var exoKG: UITextField!
+    @IBOutlet weak var imageBook: UIImageView!
+    @IBOutlet weak var addButton: UIButton!
     
+    @IBOutlet weak var test: NSLayoutConstraint!
     var ref = FIRDatabase.database().reference()
     
     var limiteKG = 200
@@ -25,6 +28,13 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
     var limiteRep = 40
     
     var date:Date!
+    var modif = false
+    var node : String?
+    var tmpKG :String?
+    var tmpName : String?
+    var tmpRep : String?
+    var tmpSerie : String?
+    var tmpDate : String?
     
     var exos = [String]()
     var exoNameList = [[String:String]]()
@@ -57,6 +67,19 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
         exoSerie.delegate = self
         exoKG.delegate = self
         
+        if let tmp = tmpKG{
+            exoKG.text = tmp
+        }
+        if let tmp = tmpRep{
+            exoRep.text = tmp
+        }
+        if let tmp = tmpSerie{
+            exoSerie.text = tmp
+        }
+        if let tmp = tmpName{
+            exoName.text = tmp
+        }
+        
         exoName.tag = 0
         exoRep.tag = 1
         exoSerie.tag = 2
@@ -76,8 +99,20 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
                 self.limiteSerie = tmpSerie
             }
         })
+        
+        if (UIDevice().screenType == .iPhone4){
+          imageBook.isHidden = true
+        }
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if (imageBook.isHidden == true){
+            test.constant -= 50
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
@@ -196,12 +231,45 @@ class FormsViewController: UIViewController, UITextFieldDelegate {
             if exoName.text != ""{
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy MM dd"
-                let tmpDate = formatter.string(from: date)
-                ref.child("users").child(user).child("exosList").child(exoName.text!).childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDate])
-//                ref.child("users").child(user).child("exos").childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDate])
+                
+                if (modif == false){
+                    let tmpDay = formatter.string(from: date)
+                    ref.child("users").child(user).child("exosList").child(exoName.text!).childByAutoId().setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDay])
+                }
+                else{
+                    ref.child("users").child(user).child("exosList").child(exoName.text!).child(node!).setValue(["name":exoName.text!, "KG": exoKG.text!, "serie":exoSerie.text!, "rep":exoRep.text!, "date":tmpDate])
+                }
                 
                 self.dismiss(animated: true, completion: nil)
             }
+        }
+    }
+}
+
+extension UIDevice {
+    var iPhone: Bool {
+        return UIDevice().userInterfaceIdiom == .phone
+    }
+    enum ScreenType: String {
+        case iPhone4
+        case iPhone5
+        case iPhone6
+        case iPhone6Plus
+        case unknown
+    }
+    var screenType: ScreenType {
+        guard iPhone else { return .unknown }
+        switch UIScreen.main.nativeBounds.height {
+        case 960:
+            return .iPhone4
+        case 1136:
+            return .iPhone5
+        case 1334:
+            return .iPhone6
+        case 2208:
+            return .iPhone6Plus
+        default:
+            return .unknown
         }
     }
 }

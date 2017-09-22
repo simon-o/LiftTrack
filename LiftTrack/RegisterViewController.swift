@@ -40,7 +40,7 @@ class RegisterViewController: UIViewController {
         password.layer.cornerRadius = 21.0
         password.layer.borderWidth = 0.0
     
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(RegisterViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     

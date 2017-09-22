@@ -26,7 +26,7 @@ class ManageAccountViewController: UIViewController {
         pass.layer.cornerRadius = 21.0
         pass.layer.borderWidth = 0.0
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ManageAccountViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -34,6 +34,10 @@ class ManageAccountViewController: UIViewController {
         view.endEditing(true)
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }

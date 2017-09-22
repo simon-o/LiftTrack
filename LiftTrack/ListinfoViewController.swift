@@ -104,7 +104,7 @@ class ListinfoViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell1") as! ListGrpahTableViewCell
         cell.selectionStyle = .none
-        if let tmpArray = finalDict.popFirst()?.value{
+        if let tmpArray = finalDict[keysName[indexPath.section]]{
             cell.updateChart(tmpArray)
         }
         return cell

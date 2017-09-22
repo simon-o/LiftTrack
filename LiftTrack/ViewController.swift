@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var appTitle: UILabel!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var switchSave: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +33,18 @@ class ViewController: UIViewController {
         password.layer.borderWidth = 0.0
         
         //Debug
-        email.text = "lol1@lol.fr"
-        password.text = "lollol"
+//        email.text = "lol1@lol.fr"
+//        password.text = "lollol"
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        switchSave.isOn = false
+        let bool = UserDefaults.standard.bool(forKey: "switch")
+        if bool == true{
+            switchSave.isOn = true
+            email.text = UserDefaults.standard.string(forKey: "email")
+            password.text = UserDefaults.standard.string(forKey: "password")
+        }
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -94,6 +103,16 @@ class ViewController: UIViewController {
                     self.present(alert, animated: true, completion: nil)
                 }else{
                     UserDefaults.standard.set(user?.uid, forKey: "userUID")
+                    if (self.switchSave.isOn == true){
+                        UserDefaults.standard.set(self.email.text, forKey: "email")
+                        UserDefaults.standard.set(self.password.text, forKey: "password")
+                        UserDefaults.standard.set(true, forKey: "switch")
+                    }
+                    else{
+                        UserDefaults.standard.set("", forKey: "email")
+                        UserDefaults.standard.set("", forKey: "password")
+                        UserDefaults.standard.set(false, forKey: "switch")
+                    }
                     if let homeVC = (self.storyboard?.instantiateViewController(withIdentifier: "MainTabBar")) as? UITabBarController
                     {
                         self.present(homeVC, animated: true, completion: {
